@@ -14,11 +14,15 @@
     -fx-background-color: lightgrey;
 }
 
-#vista1 {
+#start {
     -fx-background-color: aliceblue;
 }
 
-#vista2 {
+#end {
+    -fx-background-color: aliceblue;
+}
+
+#question {
     -fx-background-color: coral;
 }
 

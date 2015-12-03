@@ -1,7 +1,5 @@
 package com.company;
 
-import javafx.application.Platform;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,24 +10,23 @@ public class Question {
     public String getQuestion() {
         return question;
     }
-    public void ShowQusetion(){
-
-
-        VistaNavigator.loadVista(VistaNavigator.VISTA_2);
-    }
 
     public void setQuestion(String question) {
         this.question = question;
     }
 
-    public List<String> getMyList() {
-        return myList;
+    public List<String> getAnswers() {
+        return answers;
     }
 
-    public void setMyList(List<String> myList) {
-        this.myList = myList;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
     }
 
+    public Question() {
+        this.questionSet = false;
+        this.end = false;
+    }
 
     public Boolean getQuestionSet() {
         return questionSet;
@@ -39,7 +36,27 @@ public class Question {
         this.questionSet = questionSet;
     }
 
+
+    public Boolean getEnd() {
+        return end;
+    }
+
+    public void setEnd(Boolean end) {
+        this.end = end;
+    }
+
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
     private Boolean questionSet;
+    private Boolean end;
     private String question;
-    List<String> myList = new ArrayList<String>();
+    private String answer;
+    List<String> answers = new ArrayList<String>();
 }
