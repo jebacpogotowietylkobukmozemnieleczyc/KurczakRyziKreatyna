@@ -1,5 +1,7 @@
 package com.company;
 
+//import com.company.Nutrient;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -90,7 +92,7 @@ public class Main extends Application {
 
     private static KnowledgeBase readKnowledgeBase() throws Exception {
         KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        knowledgeBuilder.add(ResourceFactory.newClassPathResource("drools/sample.drl"), ResourceType.DRL);
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
         KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
         if (errors.size() > 0) {
             for (KnowledgeBuilderError error : errors) {
@@ -101,5 +103,13 @@ public class Main extends Application {
         KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
         knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
         return knowledgeBase;
+    }
+    
+    public void stop() throws java.lang.Exception
+    {
+    	// FIXME
+    	System.out.println("KONIEC");
+    	statefulKnowledgeSession.insert(new Nutrient("End"));
+    	droolsThread.t.interrupt();
     }
 }

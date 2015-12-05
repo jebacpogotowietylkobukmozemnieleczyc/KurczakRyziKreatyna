@@ -27,9 +27,9 @@ public class QuestionController {
     private Main mainApp;
     private Timeline timeline;
 
-    private void CheckDrools() {
+    private void checkDrools() {
         if (mainApp.getQuestion().getQuestionSet()) {
-            mainApp.getQuestion().setQuestionSet(false);
+        	mainApp.getQuestion().setQuestionSet(false);
             timeline.stop();
             VistaNavigator.loadVista(VistaNavigator.QUESTION);
         } else if (mainApp.getQuestion().getEnd()) {
@@ -42,10 +42,9 @@ public class QuestionController {
 
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
-
         timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
-                ae -> CheckDrools()));
+                ae->checkDrools()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
@@ -57,7 +56,6 @@ public class QuestionController {
             vbox.getChildren().add(radioButton);
             radioButtons.add(radioButton);
         }
-
     }
 
     @FXML

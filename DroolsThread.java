@@ -24,9 +24,6 @@ public class DroolsThread extends Thread {
             e.printStackTrace();
         }
         System.out.println("Thread " + threadName + " exiting.");
-        while (true) {
-
-        }
     }
 
     public void start() {

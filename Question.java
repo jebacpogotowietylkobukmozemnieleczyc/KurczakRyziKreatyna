@@ -7,12 +7,30 @@ import java.util.List;
  * Created by klimas on 30.11.15.
  */
 public class Question {
+	
     public String getQuestion() {
         return question;
     }
-
-    public void setQuestion(String question) {
+    
+    public void setQuestion(String question, List<String> answers) {
         this.question = question;
+        this.answers.clear();
+		for (String answer : answers)
+	    {
+			this.answers.add(answer);
+		}
+		this.questionSet = true;
+    }
+    
+    public void setQuestion(String question, List<String> answers, DroolsThread thread) {
+        this.question = question;
+        this.answers.clear();
+		for (String answer : answers)
+	    {
+			this.answers.add(answer);
+		}
+		this.questionSet = true;
+		thread.Wait();
     }
 
     public List<String> getAnswers() {

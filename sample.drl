@@ -1,0 +1,170 @@
+package com.sample
+
+import com.company.Main;
+import com.company.Question;
+import com.company.DroolsThread;
+import com.company.Nutrient;
+import com.company.Product;
+import javafx.application.Platform;
+import org.drools.runtime.StatefulKnowledgeSession;
+import java.util.Arrays;
+
+
+global Question question;
+global DroolsThread droolsThread;
+
+//objects
+//sterowanie
+//declare Start
+//end
+
+//rules
+//sterowanie
+rule "Init"
+    when
+    then
+    	kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup( "initial" ).setFocus();
+    	//insert(new Start());
+end
+
+rule "Question: Protein"
+		agenda-group "initial"
+    when
+    then
+        System.out.println( "Protein" );
+        question.setQuestion("Zawartoœæ bia³ka:",
+        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        insert(new Nutrient("Protein", question.getAnswer()));
+end
+
+rule "Question: Carbo"
+		agenda-group "initial"
+    when
+    then
+        System.out.println( "Carbo" );
+        question.setQuestion("Zawartoœæ wêglowodanów:",
+        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        insert(new Nutrient("Carbohydrate", question.getAnswer()));
+end
+
+rule "Question: Fat"
+		agenda-group "initial"
+    when
+    then
+        System.out.println( "Fat" );
+        question.setQuestion("Zawartoœæ t³uszczu:",
+        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        insert(new Nutrient("Fat", question.getAnswer()));
+end
+
+rule "Question: Calories"
+		agenda-group "initial"
+    when
+    then
+        System.out.println( "Kalorycznoœæ" );
+        question.setQuestion("Kalorycznoœæ:",
+        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        insert(new Nutrient("Calories", question.getAnswer()));
+end
+
+rule "Question: Fiber"
+		agenda-group "initial"
+    when
+    then
+        System.out.println( "Fiber" );
+        question.setQuestion("Zawartoœæ b³onnika:",
+        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        insert(new Nutrient("Fiber", question.getAnswer()));
+end
+
+rule "Makaron"
+	when
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Niska"))
+		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
+	then
+		insert(new Product("Makaron Pe³noziarnisty", false));
+end
+
+rule "P³atki owsiane"
+	when
+		Nutrient(Name("Protein"), Value("Œrednia"))
+	then
+		insert(new Product("P³atki owsiane", false));
+end
+
+rule "Kurczak"
+	when
+		not Nutrient(Name("Miêso"), Value("nie"))
+		Nutrient(Name("Protein"), Value("Wysoka"))
+	then
+		insert(new Product("Kurczak", true));
+end
+
+rule "£osoœ"
+	when
+		not Nutrient(Name("Miêso"), Value("nie"))
+		Nutrient(Name("Protein"), Value("Wysoka"))
+	then
+		insert(new Product("£osoœ", true));
+end
+
+rule "Fasola"
+	when
+		Nutrient(Name("Protein"), Value("Wysoka"))
+	then
+		insert(new Product("Fasola", false));
+end
+
+rule "Jajka"
+	when
+		(
+			Nutrient(Name("Protein"), Value("Œrednia"))
+			or
+			Nutrient(Name("Protein"), Value("Wysoka"))
+		)
+		Nutrient(Name("Fat"), Value("Œrednia"))
+		Nutrient(Name("Carbohydrate"), Value("Niska"))
+	then
+		insert(new Product("Jajka", false));
+end
+
+rule "Miêso"
+		salience 1
+	when
+		not Nutrient(Name("Miêso"))
+		p: Product(isMeat())
+	then
+		System.out.println("Miêso?");
+		question.setQuestion("Miêso?", Arrays.asList("tak", "nie"), droolsThread);
+        insert(new Nutrient("Miêso", question.getAnswer()));
+        if(question.getAnswer() == "nie")
+        	retract(p);
+end
+
+rule "GatherProducts"
+		salience -1
+	when
+		p: Product()
+	then
+		System.out.println(p.Name());
+end
+
+rule "End"
+		salience -2
+    when
+    then
+        question.setEnd(true);
+        System.out.println("Kurczak, ryz i kreatyna!!!");
+        drools.halt();
+end
+
+rule "AbruptEnd"
+		salience 100
+		auto-focus true
+	when
+		Nutrient( Name("End") )
+	then
+		System.out.println("Abrupt");
+		drools.halt();
+	end
