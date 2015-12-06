@@ -73,6 +73,10 @@ public class VistaNavigator {
                 QuestionController questionController = loader.<QuestionController>getController();
                 questionController.setMainApp(main);
             }
+            if (fxml == "end.fxml") {
+                EndController endController = loader.<EndController>getController();
+                endController.setMainApp(main);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

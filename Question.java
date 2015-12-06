@@ -1,5 +1,7 @@
 package com.company;
 
+import com.thoughtworks.xstream.mapper.Mapper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class Question {
 		this.questionSet = true;
 		thread.Wait();
     }
+
 
     public List<String> getAnswers() {
         return answers;
@@ -72,9 +75,24 @@ public class Question {
         this.answer = answer;
     }
 
+    public void setEndController(EndController endController) {
+        this.endController = endController;
+    }
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    private EndController endController;
     private Boolean questionSet;
     private Boolean end;
     private String question;
     private String answer;
+
+
+    private String result;
     List<String> answers = new ArrayList<String>();
 }
