@@ -9,7 +9,7 @@ public class Nutrient{
 	public Nutrient(String name)
 	{
 		this.name = name;
-		this.value = null;
+		this.value = "";
 	}
 	
 	public Nutrient(String name, String val)
@@ -25,7 +25,9 @@ public class Nutrient{
 	
 	public boolean Value(String val)
 	{
-		return this.value.equals(val);
+		if (this.value != null)
+			return this.value.equals(val);
+		return false;
 	}
 	
 	public String getName()

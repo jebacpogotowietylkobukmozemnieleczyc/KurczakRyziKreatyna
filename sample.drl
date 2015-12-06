@@ -33,7 +33,8 @@ rule "Question: Protein"
     then
         System.out.println( "Protein" );
         question.setQuestion("Zawartoœæ bia³ka:",
-        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        						Arrays.asList("Wysoka", "Œrednia", "Niska", "Dowolna"),
+        						droolsThread);
         insert(new Nutrient("Protein", question.getAnswer()));
 end
 
@@ -43,7 +44,8 @@ rule "Question: Carbo"
     then
         System.out.println( "Carbo" );
         question.setQuestion("Zawartoœæ wêglowodanów:",
-        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        						Arrays.asList("Wysoka", "Œrednia", "Niska", "Dowolna"),
+        						droolsThread);
         insert(new Nutrient("Carbohydrate", question.getAnswer()));
 end
 
@@ -53,7 +55,8 @@ rule "Question: Fat"
     then
         System.out.println( "Fat" );
         question.setQuestion("Zawartoœæ t³uszczu:",
-        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        						Arrays.asList("Wysoka", "Œrednia", "Niska", "Dowolna"),
+        						droolsThread);
         insert(new Nutrient("Fat", question.getAnswer()));
 end
 
@@ -63,7 +66,8 @@ rule "Question: Calories"
     then
         System.out.println( "Kalorycznoœæ" );
         question.setQuestion("Kalorycznoœæ:",
-        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        						Arrays.asList("Wysoka", "Œrednia", "Niska", "Dowolna"),
+        						droolsThread);
         insert(new Nutrient("Calories", question.getAnswer()));
 end
 
@@ -73,8 +77,24 @@ rule "Question: Fiber"
     then
         System.out.println( "Fiber" );
         question.setQuestion("Zawartoœæ b³onnika:",
-        						Arrays.asList("Wysoka", "Œrednia", "Niska"), droolsThread);
+        						Arrays.asList("Wysoka", "Œrednia", "Niska", "Dowolna"),
+        						droolsThread);
         insert(new Nutrient("Fiber", question.getAnswer()));
+end
+
+// TODO
+rule "Nutrient: any value"
+		salience 1
+		agenda-group "initial"
+	when
+		n: Nutrient(Value("Dowolna"))
+	then
+		String name = n.getName();
+		retract(n);
+		for (String value : Arrays.asList("Wysoka", "Œrednia", "Niska"))
+		{
+			insert(new Nutrient(name, value));
+		}
 end
 
 rule "Makaron"
@@ -405,6 +425,100 @@ rule "Kie³ki ciecierzycy"
 		insert(new Product("Kie³ki ciecierzycy", false, false, false));
 end
 
+rule "Kie³ki pszenicy"
+	when
+		not Nutrient(Name("Gluten"), Value("nie"))
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Wysoka"))
+		Nutrient(Name("Fat"), Value("Niska"))
+		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
+		Nutrient(Name("Fiber"), Value("Wysoka"))
+	then
+		insert(new Product("Kie³ki pszenicy", false, true, false));
+end
+
+rule "Migda³y"
+	when
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Wysoka"))
+		Nutrient(Name("Fat"), Value("Wysoka"))
+		Nutrient(Name("Carbohydrate"), Value("Œrednia"))
+		Nutrient(Name("Fiber"), Value("Wysoka"))
+	then
+		insert(new Product("Migda³y", false, false, false));
+end
+
+rule "Nasiona lnu"
+	when
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Wysoka"))
+		Nutrient(Name("Fat"), Value("Wysoka"))
+		Nutrient(Name("Carbohydrate"), Value("Œrednia"))
+		Nutrient(Name("Fiber"), Value("Niska"))
+	then
+		insert(new Product("Nasiona lnu", false, false, false));
+end
+
+rule "Orzechy laskowe"
+	when
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Wysoka"))
+		Nutrient(Name("Carbohydrate"), Value("Niska"))
+		Nutrient(Name("Fiber"), Value("Wysoka"))
+	then
+		insert(new Product("Orzechy laskowe", false, false, false));
+end
+
+rule "Parówki"
+	when
+		not Nutrient(Name("Miêso"), Value("nie"))
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Wysoka"))
+		Nutrient(Name("Carbohydrate"), Value("Niska"))
+		Nutrient(Name("Fiber"), Value("Niska"))
+	then
+		insert(new Product("Parówki", true, false, false));
+end
+
+rule "W¹trobianka"
+	when
+		not Nutrient(Name("Miêso"), Value("nie"))
+		Nutrient(Name("Calories"), Value("Œrednia"))
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Wysoka"))
+		Nutrient(Name("Carbohydrate"), Value("Niska"))
+		Nutrient(Name("Fiber"), Value("Niska"))
+	then
+		insert(new Product("W¹trobianka", true, false, false));
+end
+
+rule "Bu³ki pszenne"
+	when
+		not Nutrient(Name("Gluten"), Value("nie"))
+		Nutrient(Name("Calories"), Value("Œrednia"))
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Niska"))
+		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
+		Nutrient(Name("Fiber"), Value("Niska"))
+	then
+		insert(new Product("Bu³ki pszenne", false, true, false));
+end
+
+rule "Bu³ki mleczne"
+	when
+		not Nutrient(Name("Gluten"), Value("nie"))
+		not Nutrient(Name("Laktoza"), Value("nie"))
+		Nutrient(Name("Calories"), Value("Wysoka"))
+		Nutrient(Name("Protein"), Value("Œrednia"))
+		Nutrient(Name("Fat"), Value("Niska"))
+		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
+		Nutrient(Name("Fiber"), Value("Niska"))
+	then
+		insert(new Product("Bu³ki pszenne", false, true, true));
+end
+
 rule "Miêso"
 		salience 1
 	when
@@ -430,7 +544,7 @@ rule "Gluten"
         	retract(p);
 end
 
-rule "Gluten"
+rule "Laktoza"
 		salience 1
 	when
 		not Nutrient(Name("Laktoza"))
@@ -450,13 +564,20 @@ rule "GatherProducts"
 		System.out.println(p.Name());
 end
 
+rule "NoProducts"
+		salience -1
+	when
+		not Product()
+	then
+		System.out.println("Brak produktów spe³niaj¹cych podane kryteria");
+end
+
 rule "End"
 		salience -2
     when
     then
-        question.setEnd(true);
-        System.out.println("Kurczak, ryz i kreatyna!!!");
         drools.halt();
+        question.setEnd(true);
 end
 
 rule "AbruptEnd"
@@ -465,6 +586,6 @@ rule "AbruptEnd"
 	when
 		Nutrient( Name("End") )
 	then
-		System.out.println("Abrupt");
 		drools.halt();
+		System.out.println("Abrupt");
 	end
