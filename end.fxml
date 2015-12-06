@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?scenebuilder-stylesheet vista.css?>
 
-<StackPane fx:id="end" xmlns:fx="http://javafx.com/fxml" fx:controller="com.company.EndController">
-    <children>
-        <!--<Button mnemonicParsing="false" onAction="#nextPane" text="Start" />-->
-    </children>
+<StackPane fx:id="end" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.EndController">
+   <children>
+      <GridPane>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="103.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="231.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="314.0" minHeight="10.0" prefHeight="153.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="404.0" minHeight="10.0" prefHeight="383.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Wynik" GridPane.columnIndex="1">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="wynik" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
 </StackPane>

@@ -70,10 +70,16 @@ public class QuestionController {
             }
         }
     }
+    @FXML
+    void Lose(ActionEvent event) {
+        //todo
+        System.out.println("Pomiń");
+    }
     /**
      * Event handler fired when the user requests a previous vista.
      *
      * @param event the event that triggered the handler.
      */
+
 
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?scenebuilder-stylesheet vista.css?>
 
-<VBox prefHeight="200.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.company.MainController">
+<VBox prefHeight="700.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.company.MainController">
     <children>
         <Label fx:id="headerLabel" maxWidth="1.7976931348623157E308" text="Super Program" VBox.vgrow="NEVER"/>
         <StackPane fx:id="vistaHolder" VBox.vgrow="ALWAYS"/>
