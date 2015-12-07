@@ -47,6 +47,7 @@ public class Question {
     public Question() {
         this.questionSet = false;
         this.end = false;
+        this.result = "";
     }
 
     public Boolean getQuestionSet() {

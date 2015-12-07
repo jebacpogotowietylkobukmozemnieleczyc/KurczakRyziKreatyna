@@ -14,16 +14,16 @@ public class EndController {
 
     private Main mainApp;
 
-    public void setWynik(TextField wynik) {
+    public void setWynik(Label wynik) {
         this.wynik = wynik;
     }
 
-    public TextField getWynik() {
+    public Label getWynik() {
         return wynik;
     }
 
     @FXML
-    private TextField wynik;
+    private Label wynik;
 //    @FXML
 //    void nextPane(ActionEvent event) {
 //        VistaNavigator.loadVista(VistaNavigator.QUESTION);
