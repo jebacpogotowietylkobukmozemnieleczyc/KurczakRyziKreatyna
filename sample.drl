@@ -13,18 +13,11 @@ import java.util.Arrays;
 global Question question;
 global DroolsThread droolsThread;
 
-//objects
-//sterowanie
-//declare Start
-//end
 
-//rules
-//sterowanie
 rule "Init"
     when
     then
     	kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup( "initial" ).setFocus();
-    	//insert(new Start());
 end
 
 rule "Question: Protein"
@@ -32,8 +25,8 @@ rule "Question: Protein"
     when
     then
         System.out.println( "Protein" );
-        question.setQuestion("Zawarto≈Ç≈Ç bia≈Çka:",
-        						Arrays.asList("Wysoka", "≈Çrednia", "Niska", "Dowolna"),
+        question.setQuestion("ZawartoúÊ bia≥ka:",
+        						Arrays.asList("Wysoka", "årednia", "Niska", "Dowolna"),
         						droolsThread);
         insert(new Nutrient("Protein", question.getAnswer()));
 end
@@ -43,8 +36,8 @@ rule "Question: Carbo"
     when
     then
         System.out.println( "Carbo" );
-        question.setQuestion("Zawarto≈Ç≈Ç w≈Çglowodan≈Çw:",
-        						Arrays.asList("Wysoka", "≈Çrednia", "Niska", "Dowolna"),
+        question.setQuestion("ZawartoúÊ wÍglowodanÛw:",
+        						Arrays.asList("Wysoka", "årednia", "Niska", "Dowolna"),
         						droolsThread);
         insert(new Nutrient("Carbohydrate", question.getAnswer()));
 end
@@ -54,8 +47,8 @@ rule "Question: Fat"
     when
     then
         System.out.println( "Fat" );
-        question.setQuestion("Zawarto≈Ç≈Ç t≈Çuszczu:",
-        						Arrays.asList("Wysoka", "≈Çrednia", "Niska", "Dowolna"),
+        question.setQuestion("ZawartoúÊ t≥uszczu:",
+        						Arrays.asList("Wysoka", "årednia", "Niska", "Dowolna"),
         						droolsThread);
         insert(new Nutrient("Fat", question.getAnswer()));
 end
@@ -64,9 +57,9 @@ rule "Question: Calories"
 		agenda-group "initial"
     when
     then
-        System.out.println( "Kaloryczno≈Ç≈Ç" );
-        question.setQuestion("Kaloryczno≈Ç≈Ç:",
-        						Arrays.asList("Wysoka", "≈Çrednia", "Niska", "Dowolna"),
+        System.out.println( "KalorycznoúÊ" );
+        question.setQuestion("KalorycznoúÊ:",
+        						Arrays.asList("Wysoka", "årednia", "Niska", "Dowolna"),
         						droolsThread);
         insert(new Nutrient("Calories", question.getAnswer()));
 end
@@ -76,13 +69,12 @@ rule "Question: Fiber"
     when
     then
         System.out.println( "Fiber" );
-        question.setQuestion("Zawarto≈Ç≈Ç b≈Çonnika:",
-        						Arrays.asList("Wysoka", "≈Çrednia", "Niska", "Dowolna"),
+        question.setQuestion("ZawartoúÊ b≥onnika:",
+        						Arrays.asList("Wysoka", "årednia", "Niska", "Dowolna"),
         						droolsThread);
         insert(new Nutrient("Fiber", question.getAnswer()));
 end
 
-// TODO
 rule "Nutrient: any value"
 		salience 1
 		agenda-group "initial"
@@ -91,7 +83,7 @@ rule "Nutrient: any value"
 	then
 		String name = n.getName();
 		retract(n);
-		for (String value : Arrays.asList("Wysoka", "≈Çrednia", "Niska"))
+		for (String value : Arrays.asList("Wysoka", "årednia", "Niska"))
 		{
 			insert(new Nutrient(name, value));
 		}
@@ -106,24 +98,24 @@ rule "Makaron"
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
 	then
-		insert(new Product("Makaron Pe≈Çnoziarnisty", false, true, false));
+		insert(new Product("Makaron Pe≥noziarnisty", false, true, false));
 end
 
-rule "P≈Çatki owsiane"
+rule "P≥atki owsiane"
 	when
 		not Nutrient(Name("Gluten"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
-		Nutrient(Name("Fiber"), Value("≈Çrednia"))
+		Nutrient(Name("Fiber"), Value("årednia"))
 	then
-		insert(new Product("P≈Çatki owsiane", false, true, false));
+		insert(new Product("P≥atki owsiane", false, true, false));
 end
 
 rule "Kurczak"
 	when
-		not Nutrient(Name("Mi≈Çso"), Value("nie"))
+		not Nutrient(Name("MiÍso"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Niska"))
@@ -133,25 +125,25 @@ rule "Kurczak"
 		insert(new Product("Kurczak", true, false, false));
 end
 
-rule "≈Çoso≈Ç"
+rule "£osoú"
 	when
-		not Nutrient(Name("Mi≈Çso"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"));
+		not Nutrient(Name("MiÍso"), Value("nie"))
+		Nutrient(Name("Calories"), Value("årednia"));
 		(
-			Nutrient(Name("Protein"), Value("≈Çrednia"))
+			Nutrient(Name("Protein"), Value("årednia"))
 			or
 			Nutrient(Name("Protein"), Value("Wysoka"))
 		)
-		Nutrient(Name("Fat"), Value("≈Çrednia"))
+		Nutrient(Name("Fat"), Value("årednia"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("≈Çoso≈Ç", true, false, false));
+		insert(new Product("£osoú", true, false, false));
 end
 
 rule "Fasola"
 	when
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
@@ -162,9 +154,9 @@ end
 
 rule "Jajka"
 	when
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		(
-			Nutrient(Name("Protein"), Value("≈Çrednia"))
+			Nutrient(Name("Protein"), Value("årednia"))
 			or
 			Nutrient(Name("Protein"), Value("Wysoka"))
 		)
@@ -177,6 +169,7 @@ end
 
 rule "Orzechy arachidowe"
 	when
+		not Nutrient(Name("Orzeszki"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
@@ -191,7 +184,7 @@ rule "Banan"
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
 		insert(new Product("Banan", false, false, false));
@@ -199,7 +192,7 @@ end
 
 rule "Daktyle suszone"
 	when
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
@@ -208,7 +201,7 @@ rule "Daktyle suszone"
 		insert(new Product("Daktyle suszone", false, false, false));
 end
 
-rule "Jab≈Çko"
+rule "Jab≥ko"
 	when
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Niska"))
@@ -216,10 +209,10 @@ rule "Jab≈Çko"
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Jab≈Çko", false, false, false));
+		insert(new Product("Jab≥ko", false, false, false));
 end
 
-rule "Broku≈Çy"
+rule "Broku≥y"
 	when
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Niska"))
@@ -227,12 +220,12 @@ rule "Broku≈Çy"
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Broku≈Çy", false, false, false));
+		insert(new Product("Broku≥y", false, false, false));
 end
 
 rule "Dorsz"
 	when
-		not Nutrient(Name("Mi≈Çso"))
+		not Nutrient(Name("MiÍso"))
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Niska"))
@@ -248,7 +241,7 @@ rule "Groszek zielony"
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
-		Nutrient(Name("Fiber"), Value("≈Çrednia"))
+		Nutrient(Name("Fiber"), Value("årednia"))
 	then
 		insert(new Product("Groszek zielony", false, false, false));
 end
@@ -257,8 +250,8 @@ rule "Soja"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
-		Nutrient(Name("Fat"), Value("≈Çrednia"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Fat"), Value("årednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
 	then
 		insert(new Product("Soja", false, false, false));
@@ -269,7 +262,7 @@ rule "Ziemniaki"
 		Nutrient(Name("Calories"), Value("Niska"))
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
 		insert(new Product("Ziemniaki", false, false, false));
@@ -278,7 +271,7 @@ end
 rule "Kasza jaglana"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Niska"))
@@ -286,19 +279,19 @@ rule "Kasza jaglana"
 		insert(new Product("Kasza jaglana", false, false, false));
 end
 
-rule "Kasza j≈Çczmienna"
+rule "Kasza jÍczmienna"
 	when
 		not Nutrient(Name("Gluten"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
-		Nutrient(Name("Fiber"), Value("≈Çrednia"))
+		Nutrient(Name("Fiber"), Value("årednia"))
 	then
 		insert(new Product("Kasza jaglana", false, true, false));
 end
 
-rule "Ry≈Ç bia≈Çy"
+rule "Ryø bia≥y"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Niska"))
@@ -306,10 +299,10 @@ rule "Ry≈Ç bia≈Çy"
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Ry≈Ç bia≈Çy", false, false, false));
+		insert(new Product("Ryø bia≥y", false, false, false));
 end
 
-rule "Ry≈Ç br≈Çzowy"
+rule "Ryø brπzowy"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Niska"))
@@ -317,7 +310,7 @@ rule "Ry≈Ç br≈Çzowy"
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
 	then
-		insert(new Product("Ry≈Ç br≈Çzowy", false, false, false));
+		insert(new Product("Ryø brπzowy", false, false, false));
 end
 
 rule "Mleko"
@@ -355,28 +348,28 @@ rule "Ser twarogowy chudy"
 		insert(new Product("Ser twarogowy chudy", false, false, true));
 end
 
-rule "Ser twarogowy p≈Çt≈Çusty"
+rule "Ser twarogowy pÛ≥t≥usty"
 	when
 		not Nutrient(Name("Laktoza"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Ser twarogowy p≈Çt≈Çusty", false, false, true));
+		insert(new Product("Ser twarogowy pÛ≥t≥usty", false, false, true));
 end
 
-rule "Ser twarogowy t≈Çusty"
+rule "Ser twarogowy t≥usty"
 	when
 		not Nutrient(Name("Laktoza"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
-		Nutrient(Name("Fat"), Value("≈Çrednia"))
+		Nutrient(Name("Fat"), Value("årednia"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Ser twarogowy t≈Çusty", false, false, true));
+		insert(new Product("Ser twarogowy t≥usty", false, false, true));
 end
 
 rule "Parmezan"
@@ -391,41 +384,41 @@ rule "Parmezan"
 		insert(new Product("Parmezan", false, false, true));
 end
 
-rule "W≈Çtroba wieprzowa"
+rule "Wπtroba wieprzowa"
 	when
-		not Nutrient(Name("Mi≈Çso"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		not Nutrient(Name("MiÍso"), Value("nie"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("W≈Çtroba wieprzowa", true, false, false));
+		insert(new Product("Wπtroba wieprzowa", true, false, false));
 end
 
 rule "Bataty"
 	when
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
 		Nutrient(Name("Protein"), Value("Niska"))
 		Nutrient(Name("Fat"), Value("Niska"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
 		insert(new Product("Bataty", false, false, false));
 end
 
-rule "Kie≈Çki ciecierzycy"
+rule "Kie≥ki ciecierzycy"
 	when
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Niska"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Kie≈Çki ciecierzycy", false, false, false));
+		insert(new Product("Kie≥ki ciecierzycy", false, false, false));
 end
 
-rule "Kie≈Çki pszenicy"
+rule "Kie≥ki pszenicy"
 	when
 		not Nutrient(Name("Gluten"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
@@ -434,18 +427,18 @@ rule "Kie≈Çki pszenicy"
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
 	then
-		insert(new Product("Kie≈Çki pszenicy", false, true, false));
+		insert(new Product("Kie≥ki pszenicy", false, true, false));
 end
 
-rule "Migda≈Çy"
+rule "Migda≥y"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
 	then
-		insert(new Product("Migda≈Çy", false, false, false));
+		insert(new Product("Migda≥y", false, false, false));
 end
 
 rule "Nasiona lnu"
@@ -453,7 +446,7 @@ rule "Nasiona lnu"
 		Nutrient(Name("Calories"), Value("Wysoka"))
 		Nutrient(Name("Protein"), Value("Wysoka"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
-		Nutrient(Name("Carbohydrate"), Value("≈Çrednia"))
+		Nutrient(Name("Carbohydrate"), Value("årednia"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
 		insert(new Product("Nasiona lnu", false, false, false));
@@ -462,7 +455,7 @@ end
 rule "Orzechy laskowe"
 	when
 		Nutrient(Name("Calories"), Value("Wysoka"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Wysoka"))
@@ -470,64 +463,78 @@ rule "Orzechy laskowe"
 		insert(new Product("Orzechy laskowe", false, false, false));
 end
 
-rule "Par≈Çwki"
+rule "ParÛwki"
 	when
-		not Nutrient(Name("Mi≈Çso"), Value("nie"))
+		not Nutrient(Name("MiÍso"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Par≈Çwki", true, false, false));
+		insert(new Product("ParÛwki", true, false, false));
 end
 
-rule "W≈Çtrobianka"
+rule "Wπtrobianka"
 	when
-		not Nutrient(Name("Mi≈Çso"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		not Nutrient(Name("MiÍso"), Value("nie"))
+		Nutrient(Name("Calories"), Value("årednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Wysoka"))
 		Nutrient(Name("Carbohydrate"), Value("Niska"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("W≈Çtrobianka", true, false, false));
+		insert(new Product("Wπtrobianka", true, false, false));
 end
 
-rule "Bu≈Çki pszenne"
+rule "Bu≥ki pszenne"
 	when
 		not Nutrient(Name("Gluten"), Value("nie"))
-		Nutrient(Name("Calories"), Value("≈Çrednia"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Calories"), Value("årednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Bu≈Çki pszenne", false, true, false));
+		insert(new Product("Bu≥ki pszenne", false, true, false));
 end
 
-rule "Bu≈Çki mleczne"
+rule "Bu≥ki mleczne"
 	when
 		not Nutrient(Name("Gluten"), Value("nie"))
 		not Nutrient(Name("Laktoza"), Value("nie"))
 		Nutrient(Name("Calories"), Value("Wysoka"))
-		Nutrient(Name("Protein"), Value("≈Çrednia"))
+		Nutrient(Name("Protein"), Value("årednia"))
 		Nutrient(Name("Fat"), Value("Niska"))
 		Nutrient(Name("Carbohydrate"), Value("Wysoka"))
 		Nutrient(Name("Fiber"), Value("Niska"))
 	then
-		insert(new Product("Bu≈Çki pszenne", false, true, true));
+		insert(new Product("Bu≥ki pszenne", false, true, true));
 end
 
-rule "Mi≈Çso"
+rule "Orzeszki"
 		salience 1
 	when
-		not Nutrient(Name("Mi≈Çso"))
+		not Nutrient(Name("Orzeszki"))
+		p: Product(Name().contains("Orzechy"))
+	then
+		System.out.println("Orzeszki");
+		question.setQuestion("Produkt moøe zawieraÊ \núladowe iloúci orzeszkÛw?",
+								Arrays.asList("tak", "nie"), droolsThread);
+        insert(new Nutrient("Orzeszki", question.getAnswer()));
+        if(question.getAnswer() == "nie")
+        	retract(p);
+end
+
+rule "MiÍso"
+		salience 1
+	when
+		not Nutrient(Name("MiÍso"))
 		p: Product(isMeat())
 	then
-		System.out.println("Mi≈Çso?");
-		question.setQuestion("Mi≈Çso?", Arrays.asList("tak", "nie"), droolsThread);
-        insert(new Nutrient("Mi≈Çso", question.getAnswer()));
+		System.out.println("MiÍso?");
+		question.setQuestion("MiÍso?", Arrays.asList("tak", "nie"), droolsThread);
+        insert(new Nutrient("MiÍso", question.getAnswer()));
         if(question.getAnswer() == "nie")
         	retract(p);
 end
@@ -561,9 +568,7 @@ rule "GatherProducts"
 	when
 		p: Product()
 	then
-	    question.setResult(question.getResult()+p.Name() + "\n");
-	    // + " &#10;"
-		System.out.println(p.Name());
+		question.setResult(question.getResult() + p.Name() + "\n");
 end
 
 rule "NoProducts"
@@ -571,7 +576,8 @@ rule "NoProducts"
 	when
 		not Product()
 	then
-		System.out.println("Brak produkt≈Çw spe≈Çniaj≈Çcych podane kryteria");
+		question.setResult("Brak produktÛw spe≥niajπcych podane kryteria");
+		System.out.println("Brak produktÛw spe≥niajπcych podane kryteria");
 end
 
 rule "End"

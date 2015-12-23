@@ -92,7 +92,7 @@ public class Main extends Application {
 
     private static KnowledgeBase readKnowledgeBase() throws Exception {
         KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        knowledgeBuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource("sample.drl"), ResourceType.DRL);
         KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
         if (errors.size() > 0) {
             for (KnowledgeBuilderError error : errors) {
@@ -107,9 +107,8 @@ public class Main extends Application {
     
     public void stop() throws java.lang.Exception
     {
-    	// FIXME
     	System.out.println("KONIEC");
-    	statefulKnowledgeSession.insert(new Nutrient("End"));
+	    statefulKnowledgeSession.insert(new Nutrient("End"));
     	droolsThread.t.interrupt();
     }
 }
